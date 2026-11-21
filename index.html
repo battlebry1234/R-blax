@@ -1,0 +1,848 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R-BLAX | Gaming Platform</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0c1020;
+  color: white;
+  min-height: 100vh;
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* LOGIN AND SIGNUP */
+
+.auth-screen {
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  background:
+    radial-gradient(ellipse at 15% 15%, #263c70 0%, transparent 40%),
+    radial-gradient(ellipse at 85% 85%, #43265e 0%, transparent 40%),
+    #0c1020;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 440px;
+}
+
+.logo {
+  text-align: center;
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  margin-bottom: 8px;
+  color: #8daaff;
+}
+
+.tagline {
+  text-align: center;
+  color: #9caac8;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.auth-card {
+  background: rgba(25, 33, 57, 0.96);
+  border: 1px solid #354261;
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 20px 70px rgba(0,0,0,.35);
+}
+
+.auth-card h2 {
+  font-size: 25px;
+  margin-bottom: 9px;
+}
+
+.subtitle {
+  color: #9daac5;
+  font-size: 14px;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.field {
+  margin-bottom: 19px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 9px;
+  color: #dce5ff;
+}
+
+.field input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 9px;
+  border: 1px solid #3c496a;
+  background: #111a30;
+  color: white;
+  outline: none;
+}
+
+.field input:focus {
+  border-color: #829fff;
+  box-shadow: 0 0 0 3px rgba(100,130,255,.12);
+}
+
+.primary-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 9px;
+  background: linear-gradient(100deg, #5475f5, #8057e9);
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  transition: .2s;
+}
+
+.primary-button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.switch-text {
+  text-align: center;
+  color: #aab6d0;
+  font-size: 14px;
+  margin-top: 23px;
+}
+
+.text-button {
+  color: #92aaff;
+  font-weight: bold;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
+.message {
+  display: none;
+  padding: 12px;
+  margin-bottom: 17px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.message.error {
+  display: block;
+  background: #47252f;
+  color: #ffb6c1;
+  border: 1px solid #80404b;
+}
+
+.message.success {
+  display: block;
+  background: #183e34;
+  color: #a6f5ce;
+  border: 1px solid #286c56;
+}
+
+.small-note {
+  color: #7e8ba8;
+  font-size: 11px;
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* DEVICE SELECTION */
+
+.device-container {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  padding: 25px;
+  text-align: center;
+}
+
+.device-container h1 {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.device-container p {
+  color: #aab6d0;
+  line-height: 1.6;
+  margin-bottom: 35px;
+}
+
+.device-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.device-option {
+  background: #19233c;
+  border: 2px solid #344263;
+  border-radius: 17px;
+  padding: 35px 15px;
+  color: white;
+  transition: .2s;
+}
+
+.device-option:hover {
+  border-color: #829fff;
+  background: #253454;
+  transform: translateY(-4px);
+}
+
+.device-icon {
+  font-size: 55px;
+  margin-bottom: 20px;
+}
+
+.device-option h2 {
+  margin-bottom: 10px;
+}
+
+.device-option span {
+  font-size: 13px;
+  color: #aab6d0;
+}
+
+/* TEMPORARY HUB */
+
+.hub-screen {
+  flex-direction: column;
+  background: #101729;
+}
+
+.topbar {
+  height: 72px;
+  background: #19233b;
+  border-bottom: 1px solid #303e5d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+}
+
+.topbar .logo {
+  margin: 0;
+  font-size: 25px;
+}
+
+.topbar button {
+  background: #34466e;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+.hub-content {
+  max-width: 900px;
+  width: 90%;
+  margin: 65px auto;
+}
+
+.hub-content h1 {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.hub-content p {
+  color: #aab6d0;
+  line-height: 1.6;
+}
+
+.hub-panel {
+  margin-top: 30px;
+  background: #1b2844;
+  border: 1px solid #354567;
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.hub-panel h2 {
+  margin-bottom: 12px;
+}
+
+.avatar-placeholder {
+  width: 75px;
+  height: 75px;
+  background: #344d80;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+@media(max-width: 520px) {
+  .auth-card {
+    padding: 24px 19px;
+  }
+
+  .device-options {
+    grid-template-columns: 1fr;
+  }
+
+  .device-option {
+    padding: 22px;
+  }
+
+  .logo {
+    font-size: 32px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+
+<section id="loginScreen" class="screen auth-screen active">
+  <div class="auth-container">
+
+    <div class="logo">R-BLAX</div>
+    <div class="tagline">YOUR WORLD. YOUR GAMES.</div>
+
+    <div class="auth-card">
+      <h2>Welcome Back!</h2>
+      <p class="subtitle">Sign in to continue your adventure.</p>
+
+      <div id="loginMessage" class="message"></div>
+
+      <form id="loginForm">
+
+        <div class="field">
+          <label for="loginUsername">Username / Profile</label>
+          <input id="loginUsername"
+                 type="text"
+                 placeholder="Enter your username"
+                 autocomplete="username"
+                 required>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword"
+                 type="password"
+                 placeholder="Enter your password"
+                 autocomplete="current-password"
+                 required>
+        </div>
+
+        <button class="primary-button" type="submit">
+          LOG IN
+        </button>
+
+      </form>
+
+      <div class="switch-text">
+        New to R-BLAX?
+        <button class="text-button" onclick="showScreen('signupScreen')">
+          Sign Up
+        </button>
+      </div>
+
+      <div class="small-note">
+        Your account must be verified before entering R-BLAX.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNUP SCREEN -->
+
+<section id="signupScreen" class="screen auth-screen">
+  <div class="auth-container">
+
+    <div class="logo">R-BLAX</div>
+    <div class="tagline">CREATE YOUR ACCOUNT</div>
+
+    <div class="auth-card">
+      <h2>Create Account</h2>
+      <p class="subtitle">
+        Join R-BLAX and start your adventure.
+      </p>
+
+      <div id="signupMessage" class="message"></div>
+
+      <form id="signupForm">
+
+        <div class="field">
+          <label for="signupUsername">Choose a Username</label>
+          <input id="signupUsername"
+                 type="text"
+                 placeholder="Your username"
+                 minlength="3"
+                 maxlength="20"
+                 autocomplete="username"
+                 required>
+        </div>
+
+        <div class="field">
+          <label for="signupPassword">Create Password</label>
+          <input id="signupPassword"
+                 type="password"
+                 placeholder="At least 8 characters"
+                 minlength="8"
+                 autocomplete="new-password"
+                 required>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirm Password</label>
+          <input id="confirmPassword"
+                 type="password"
+                 placeholder="Enter your password again"
+                 autocomplete="new-password"
+                 required>
+        </div>
+
+        <button class="primary-button" type="submit">
+          CREATE ACCOUNT
+        </button>
+
+      </form>
+
+      <div class="switch-text">
+        Already have an account?
+        <button class="text-button" onclick="showScreen('loginScreen')">
+          Log In
+        </button>
+      </div>
+
+      <div class="small-note">
+        Up to three local demo accounts can be created in this browser.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVICE SELECTION -->
+
+<section id="deviceScreen" class="screen auth-screen">
+  <div class="device-container">
+
+    <div class="logo">R-BLAX</div>
+
+    <h1>Choose Your Device</h1>
+
+    <p>
+      Welcome, <strong id="deviceUsername"></strong>!
+      How will you be playing today?
+    </p>
+
+    <div class="device-options">
+
+      <button class="device-option"
+              onclick="enterHub('Computer')">
+        <div class="device-icon">🖥️</div>
+        <h2>Computer</h2>
+        <span>Keyboard and mouse controls</span>
+      </button>
+
+      <button class="device-option"
+              onclick="enterHub('Phone')">
+        <div class="device-icon">📱</div>
+        <h2>Phone</h2>
+        <span>Touchscreen joystick controls</span>
+      </button>
+
+    </div>
+
+    <p style="margin-top:25px;font-size:12px;">
+      You will choose your device again each time you log in.
+    </p>
+
+  </div>
+</section>
+
+<!-- TEMPORARY GAME HUB -->
+
+<section id="hubScreen" class="screen hub-screen">
+
+  <header class="topbar">
+    <div class="logo">R-BLAX</div>
+    <button onclick="logout()">Log Out</button>
+  </header>
+
+  <main class="hub-content">
+
+    <h1>Welcome to R-BLAX!</h1>
+    <p>
+      Your gaming adventure starts here.
+    </p>
+
+    <div class="hub-panel">
+
+      <div class="avatar-placeholder">👤</div>
+
+      <h2 id="hubUsername"></h2>
+
+      <p id="hubDevice"></p>
+
+      <p style="margin-top:20px;">
+        Your game hub is being built.
+        Games, profiles, avatars, and settings
+        will be added as we develop R-BLAX.
+      </p>
+
+    </div>
+
+  </main>
+
+</section>
+
+<script>
+
+/* ACCOUNT STORAGE */
+
+const STORAGE_KEY = "rblax_demo_accounts_v1";
+
+function getAccounts() {
+  try {
+    const data = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveAccounts(accounts) {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(accounts)
+  );
+}
+
+/* SCREEN NAVIGATION */
+
+function showScreen(screenId) {
+
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  document.getElementById(screenId).classList.add("active");
+
+  clearMessages();
+}
+
+function clearMessages() {
+  ["loginMessage", "signupMessage"].forEach(id => {
+    const message = document.getElementById(id);
+    message.className = "message";
+    message.textContent = "";
+  });
+}
+
+function showMessage(id, text, type) {
+  const element = document.getElementById(id);
+
+  element.textContent = text;
+  element.className = "message " + type;
+}
+
+/* PASSWORD HASHING */
+
+async function hashPassword(password, salt) {
+
+  const encoder = new TextEncoder();
+
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(password),
+    "PBKDF2",
+    false,
+    ["deriveBits"]
+  );
+
+  const result = await crypto.subtle.deriveBits(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 150000,
+      hash: "SHA-256"
+    },
+    key,
+    256
+  );
+
+  return Array.from(new Uint8Array(result))
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function createSalt() {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  return Array.from(salt)
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function hexToBytes(hex) {
+  const bytes = new Uint8Array(hex.length / 2);
+
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+  }
+
+  return bytes;
+}
+
+/* SIGN UP */
+
+document.getElementById("signupForm")
+.addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  const username =
+    document.getElementById("signupUsername").value.trim();
+
+  const password =
+    document.getElementById("signupPassword").value;
+
+  const confirmation =
+    document.getElementById("confirmPassword").value;
+
+  if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+    showMessage(
+      "signupMessage",
+      "Use 3–20 letters, numbers, or underscores for your username.",
+      "error"
+    );
+    return;
+  }
+
+  if (password.length < 8) {
+    showMessage(
+      "signupMessage",
+      "Your password must have at least 8 characters.",
+      "error"
+    );
+    return;
+  }
+
+  if (password !== confirmation) {
+    showMessage(
+      "signupMessage",
+      "Your passwords do not match.",
+      "error"
+    );
+    return;
+  }
+
+  const accounts = getAccounts();
+
+  if (accounts.length >= 3) {
+    showMessage(
+      "signupMessage",
+      "This browser already has three demo accounts.",
+      "error"
+    );
+    return;
+  }
+
+  if (accounts.some(account =>
+      account.username.toLowerCase() === username.toLowerCase()
+  )) {
+    showMessage(
+      "signupMessage",
+      "That username is already registered.",
+      "error"
+    );
+    return;
+  }
+
+  const button = event.submitter;
+  button.disabled = true;
+  button.textContent = "CREATING ACCOUNT...";
+
+  try {
+    const salt = createSalt();
+
+    const passwordHash = await hashPassword(
+      password,
+      hexToBytes(salt)
+    );
+
+    accounts.push({
+      username: username,
+      salt: salt,
+      passwordHash: passwordHash,
+      createdAt: new Date().toISOString()
+    });
+
+    saveAccounts(accounts);
+
+    document.getElementById("loginUsername").value = username;
+    document.getElementById("loginPassword").value = "";
+
+    document.getElementById("signupForm").reset();
+
+    showScreen("loginScreen");
+
+    showMessage(
+      "loginMessage",
+      "Account created! Please enter your password to log in.",
+      "success"
+    );
+
+  } catch(error) {
+    showMessage(
+      "signupMessage",
+      "Could not create the account. Check browser storage and try again.",
+      "error"
+    );
+  } finally {
+    button.disabled = false;
+    button.textContent = "CREATE ACCOUNT";
+  }
+
+});
+
+/* LOG IN */
+
+let currentUser = null;
+
+document.getElementById("loginForm")
+.addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  const username =
+    document.getElementById("loginUsername").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const accounts = getAccounts();
+
+  const account = accounts.find(item =>
+    item.username.toLowerCase() === username.toLowerCase()
+  );
+
+  if (!account) {
+    showMessage(
+      "loginMessage",
+      "Username or password is incorrect.",
+      "error"
+    );
+    return;
+  }
+
+  const button = event.submitter;
+  button.disabled = true;
+  button.textContent = "VERIFYING...";
+
+  try {
+    const enteredHash = await hashPassword(
+      password,
+      hexToBytes(account.salt)
+    );
+
+    if (enteredHash !== account.passwordHash) {
+      showMessage(
+        "loginMessage",
+        "Username or password is incorrect.",
+        "error"
+      );
+      return;
+    }
+
+    currentUser = account;
+
+    document.getElementById("deviceUsername").textContent =
+      account.username;
+
+    document.getElementById("loginPassword").value = "";
+
+    showScreen("deviceScreen");
+
+  } catch(error) {
+    showMessage(
+      "loginMessage",
+      "Login verification failed. Please try again.",
+      "error"
+    );
+  } finally {
+    button.disabled = false;
+    button.textContent = "LOG IN";
+  }
+
+});
+
+/* ENTER GAME HUB */
+
+function enterHub(device) {
+
+  if (!currentUser) {
+    showScreen("loginScreen");
+    return;
+  }
+
+  document.getElementById("hubUsername").textContent =
+    currentUser.username;
+
+  document.getElementById("hubDevice").textContent =
+    "Playing on: " + device;
+
+  showScreen("hubScreen");
+}
+
+/* LOG OUT */
+
+function logout() {
+
+  currentUser = null;
+
+  document.getElementById("loginPassword").value = "";
+
+  showScreen("loginScreen");
+}
+
+/* INITIAL PAGE */
+
+showScreen("loginScreen");
+
+</script>
+
+</body>
+</html>
